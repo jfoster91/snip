@@ -1,4 +1,6 @@
 from flask import Flask, redirect, render_template, request
+import os.path 
+from os import path
 
 app = Flask(__name__)
 
@@ -15,4 +17,11 @@ def external():
         print(request.form['tab'])
         print(request.form['test'])
 
+        if path.exists("testfile.csv"):
+            print("It exists")
+        else:
+            print("it dont exist")
+        
+
         return redirect("/")
+

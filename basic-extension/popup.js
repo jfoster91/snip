@@ -1,7 +1,8 @@
 console.log("background running");
-document.querySelector('button').addEventListener('click', onclick, false)
+document.getElementById('snip').addEventListener('click', onSnip, false)
+document.getElementById('csv').addEventListener('click', csv, false)
 
-function onclick() {
+function onSnip() {
   chrome.tabs.getSelected(null, function(tab){
     
     chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function(response){
@@ -16,4 +17,8 @@ function onclick() {
     });
     });
 });
+}
+
+function csv() {
+  // download the csv file that has been building
 }
