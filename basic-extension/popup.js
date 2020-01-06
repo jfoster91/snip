@@ -7,7 +7,7 @@ function onSnip() {
     
     chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function(response){
       console.log(response.data);
-      $.post("http://127.0.0.1:5000/external",
+      $.post("http://127.0.0.1:5000/snip",
         {
           tab: "Donald Duck",
           test: response.data

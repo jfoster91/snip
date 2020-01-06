@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request
 import os.path 
 from os import path
+import csv
 
 app = Flask(__name__)
 
@@ -8,7 +9,7 @@ app = Flask(__name__)
 def index():
     return "hello, world:!"
 
-@app.route("/external", methods=["GET", "POST"])
+@app.route("/snip", methods=["GET", "POST"])
 def external():
     if request.method == "POST":
         print("Message received cowboy")
@@ -20,8 +21,7 @@ def external():
         if path.exists("testfile.csv"):
             print("It exists")
         else:
-            print("it dont exist")
-        
+            f= open("test.csv","w+")
 
         return redirect("/")
 
