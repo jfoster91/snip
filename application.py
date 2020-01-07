@@ -2,6 +2,7 @@ from flask import Flask, redirect, render_template, request
 import os.path 
 from os import path
 import csv
+import json
 
 app = Flask(__name__)
 
@@ -13,15 +14,17 @@ def index():
 def external():
     if request.method == "POST":
         print("Message received cowboy")
-        print(request.data)
         print("now")
         print(request.form['tab'])
-        print(request.form['test'])
+        compObject = json.loads(request.form['test'])
+
+        companyName = compObject['companyName']
+        print(companyName)
 
         if path.exists("testfile.csv"):
             print("It exists")
         else:
             f= open("test.csv","w+")
 
-        return redirect("/")
+    return redirect("/")
 
