@@ -14,17 +14,23 @@ def index():
 def external():
     if request.method == "POST":
         print("Message received cowboy")
-        print("now")
-        print(request.form['tab'])
-        compObject = json.loads(request.form['test'])
 
-        companyName = compObject['companyName']
-        print(companyName)
+        array = request.form['arrayTest']
+        lst = json.loads(array)
+        
+        #  Simple check to ensure that the right data is entering the array
+        # for item in lst:
+        #     print (item)
 
+        # open file if one exists
         if path.exists("testfile.csv"):
             print("It exists")
         else:
             f= open("test.csv","w+")
+        
+        # Set up fields to write to the csv... using static data initially
+        # writer = csv.DictWriter(f, fieldnames=["companyName", "firstName" "surname"])
 
     return redirect("/")
 
+# Proposed solution... populate array in front end and then send that array to the backend
