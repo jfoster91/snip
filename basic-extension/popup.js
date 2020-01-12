@@ -12,6 +12,9 @@ function onSnip() {
     
     chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function(response){
       // send the data once the object has been completely filled
+
+      // send data to background script
+      chrome.runtime.sendMessage(response.data);
       
       dataArr.push(response.data);
      
