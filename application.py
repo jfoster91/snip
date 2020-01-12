@@ -6,8 +6,14 @@ import json
 
 app = Flask(__name__)
 
+with open('test.csv', mode='w') as test_file:
+            test_writer = csv.writer(test_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+            test_writer.writerow(["Company Name", "First Name", "Surname"])
+
 @app.route("/")
 def index():
+    
     return "hello, world:!"
 
 @app.route("/snip", methods=["GET", "POST"])
@@ -15,6 +21,7 @@ def external():
     if request.method == "POST":
         print("Message received cowboy")
 
+        # Convert array string into a python list
         array = request.form['arrayTest']
         lst = json.loads(array)
         
@@ -22,14 +29,12 @@ def external():
         for item in lst:
             print (item)
 
-        # open file if one exists
-        if path.exists("testfile.csv"):
-            print("It exists")
-        else:
-            f= open("test.csv","w+")
-        
-        # Set up fields to write to the csv... using static data initially
-        # writer = csv.DictWriter(f, fieldnames=["companyName", "firstName" "surname"])
+        with open('test.csv', mode='a') as test_file:
+            test_writer = csv.writer(test_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+            test_writer.writerow([lst[0], lst[1], lst[2]])
+
+            
 
     return redirect("/")
 
