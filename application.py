@@ -18,9 +18,9 @@ def external():
         array = request.form['arrayTest']
         lst = json.loads(array)
         
-        #  Simple check to ensure that the right data is entering the array
-        # for item in lst:
-        #     print (item)
+        # Simple check to ensure that the right data is entering the array
+        for item in lst:
+            print (item)
 
         # open file if one exists
         if path.exists("testfile.csv"):

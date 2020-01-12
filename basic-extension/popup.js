@@ -12,7 +12,9 @@ function onSnip() {
     
     chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function(response){
       // send the data once the object has been completely filled
+      
       dataArr.push(response.data);
+     
       
       if (i == fieldCount) {
         i = 0;
