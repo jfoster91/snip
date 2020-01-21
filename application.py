@@ -16,18 +16,25 @@ def index():
     
     return "Snip running"
 
-@app.route("/start")
+@app.route("/start", methods=["GET", "POST"])
 def start():
+    if request.method == "POST":
+        global fileName 
+        fileName = str(uuid.uuid4()) + ".csv"
 
-    global fileName 
-    fileName = str(uuid.uuid4()) + ".csv"
+        # Receive data as js array 
+        array = request.form['colArray']
+        # convert to python list
+        colList = json.loads(array)
 
-    with open(fileName, mode='w') as test_file:
-            test_writer = csv.writer(test_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        print(colList)
 
-            test_writer.writerow(["Company Name", "First Name", "Surname"])
+        with open(fileName, mode='w') as test_file:
+                test_writer = csv.writer(test_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-    return redirect("/")
+                test_writer.writerow(colList)
+
+        return redirect("/")
 
 @app.route("/snip", methods=["GET", "POST"])
 def snip():

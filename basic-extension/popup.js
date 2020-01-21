@@ -20,8 +20,9 @@ function add() {
   colList.appendChild(node);     
 }
 
+// Couple of bugs need to fix but it is workable
 function remove() {
-  var len = colList.childNodes.length;
+  var len = colList.childElementCount;
   console.log(len);
   colList.removeChild(colList.childNodes[len - 1]);
 }
@@ -38,7 +39,20 @@ function onSnip() {
 }
 
 function start(){
-  window.open('http://127.0.0.1:5000/start', '_blank')
+  dataArr = [];
+  var len = colList.childElementCount;
+
+// EXTRACT OUT THE TEXT CONTENT OF EACH LI AND THEN ADD TO ARRAY
+  for (var i = 0; i < len; i++) {
+    var col = colList.children[i].innerHTML;
+    dataArr.push(col);
+  }
+
+  $.post( "http://127.0.0.1:5000/start", { colArray: JSON.stringify(dataArr) }, 
+    function(data, status){
+    alert("Sent"); 
+    });
+  
 }
 
 function csv() {
