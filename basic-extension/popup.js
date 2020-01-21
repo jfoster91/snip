@@ -33,7 +33,8 @@ function onSnip() {
     chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function(response){
     
       // send data to background script
-      chrome.runtime.sendMessage(response.data);
+      chrome.runtime.sendMessage({content: response.data, type: "add"});
+ 
     });
 });
 }
@@ -47,6 +48,9 @@ function start(){
     var col = colList.children[i].innerHTML;
     dataArr.push(col);
   }
+
+// Update the data held in the background script before posting to the backend
+  chrome.runtime.sendMessage({content: dataArr, type: "new"});
 
   $.post( "http://127.0.0.1:5000/start", { colArray: JSON.stringify(dataArr) }, 
     function(data, status){

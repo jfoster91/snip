@@ -13,7 +13,7 @@ fileName = "new.csv"
 
 @app.route("/")
 def index():
-    
+
     return "Snip running"
 
 @app.route("/start", methods=["GET", "POST"])
@@ -52,7 +52,7 @@ def snip():
         with open(fileName, mode='a') as test_file:
             test_writer = csv.writer(test_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-            test_writer.writerow([lst[0], lst[1], lst[2]])
+            test_writer.writerow(lst)
 
         test_file.close()
 

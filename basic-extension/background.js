@@ -6,13 +6,22 @@ var dataArr = []
 var fieldCount = fields.length;
 
 chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
+  function(request, sender, sendResponse){
+
+  }
+)
+
+chrome.runtime.onMessage.addListener(
+    function(message) {
+
+      if (message.type == "add") {
+
         console.log("message received in background");
-        console.log(request);
+        console.log(message.content);
         
         console.log(i);
 
-        dataArr.push(request);
+        dataArr.push(message.content);
 
         if (i == fieldCount - 1) {
             i = 0;
@@ -29,4 +38,10 @@ chrome.runtime.onMessage.addListener(
             i++
           }
         return true;
+      } else if (message.type == "new") {
+          fields = message.content;
+          fieldCount = fields.length;
+          dataArr = [];
+          i = 0;
+      }
     });
