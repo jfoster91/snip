@@ -1,15 +1,11 @@
 console.log("i'm alive back here"); 
 
-var fields = ["companyName", "firstName", "surname"];
+var fields = ["Company Name", "First Name", "Surname"];
 var i = 0;
 var dataArr = []
 var fieldCount = fields.length;
+var state = "none";
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse){
-
-  }
-)
 
 chrome.runtime.onMessage.addListener(
     function(message) {
@@ -18,7 +14,6 @@ chrome.runtime.onMessage.addListener(
 
         console.log("message received in background");
         console.log(message.content);
-        
         console.log(i);
 
         dataArr.push(message.content);
@@ -34,10 +29,12 @@ chrome.runtime.onMessage.addListener(
             dataArr = [];
             });
           }
-          else {
-            i++
-          }
+        else {
+          i++
+        }
+
         return true;
+
       } else if (message.type == "new") {
           fields = message.content;
           fieldCount = fields.length;

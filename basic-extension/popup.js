@@ -8,6 +8,22 @@ document.getElementById('remove').addEventListener('click', remove, false)
 // list of columns
 var colList = document.getElementById("colList");
 
+var page = chrome.extension.getBackgroundPage();
+var columns = page.fields;
+
+console.log(columns.length);
+
+// Set up list
+for (var i = 0; i < columns.length; i++){
+  var node = document.createElement("LI"); 
+  // Create a text node                
+  var textnode = document.createTextNode(columns[i]);  
+  // Append the text to <li>       
+  node.appendChild(textnode); 
+  // Append <li> to <ul> with id="colList"                             
+  colList.appendChild(node);  
+}   
+
 // Add new column to the list
 function add() {
   // Create a <li> node
@@ -20,14 +36,14 @@ function add() {
   colList.appendChild(node);     
 }
 
-// Couple of bugs need to fix but it is workable
+// Remove item from the list
 function remove() {
   var len = colList.childElementCount;
   console.log(len);
-  colList.removeChild(colList.childNodes[len - 1]);
+  colList.removeChild(colList.childNodes[len]);
 }
 
-function onSnip() {
+function onSnip() { 
   chrome.tabs.getSelected(null, function(tab){
     
     chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function(response){
@@ -50,7 +66,7 @@ function start(){
   }
 
 // Update the data held in the background script before posting to the backend
-  chrome.runtime.sendMessage({content: dataArr, type: "new"});
+  chrome.runtime.sendMessage( {content: dataArr, type: "new"} );
 
   $.post( "http://127.0.0.1:5000/start", { colArray: JSON.stringify(dataArr) }, 
     function(data, status){
